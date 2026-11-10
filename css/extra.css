@@ -1,0 +1,67 @@
+/* Extra styles for the plain HTML version (replaces the React/Framer Motion animations). */
+
+/* Utility overrides (component display rules must not beat .hidden) */
+.hidden { display: none !important; }
+.no-fx .fx-up, .no-fx .fx-pop { animation: none; opacity: 1; }
+
+/* Entrance animations */
+.fx-up { opacity: 0; animation: fxUp 1s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+.fx-pop { opacity: 0; animation: fxPop 0.8s ease forwards; }
+@keyframes fxUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+@keyframes fxPop { from { opacity: 0; transform: scale(0.8); } to { opacity: 1; transform: none; } }
+.tap-btn { transition: transform 0.25s ease; }
+.tap-btn:hover { transform: scale(1.06); }
+.tap-btn:active { transform: scale(0.95); }
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.9s ease, transform 0.9s cubic-bezier(0.22, 1, 0.36, 1); }
+.reveal.is-in { opacity: 1; transform: none; }
+
+/* Opening sequence */
+#opening { --dur: 2.2s; transition: opacity 0.9s ease; }
+#opening.is-gone { opacity: 0; pointer-events: none; }
+.opening .curtain { transition: transform var(--dur) cubic-bezier(0.65, 0, 0.35, 1); }
+.opening.is-open .curtain-left { transform: translateX(-102%) skewY(-2deg); }
+.opening.is-open .curtain-right { transform: translateX(102%) skewY(2deg); }
+.opening-glow {
+  background: radial-gradient(circle, rgba(255,241,193,0.55) 0%, rgba(230,202,101,0.18) 35%, transparent 65%);
+  transform: scale(0.3); opacity: 0.3;
+  transition: transform calc(var(--dur) + 0.6s) ease-out, opacity calc(var(--dur) + 0.6s) ease-out;
+}
+.opening.is-open .opening-glow { transform: scale(1.2); opacity: 1; }
+.opening-text { transition: opacity 0.6s ease, transform 0.6s ease; }
+.opening.is-open .opening-text { opacity: 0; transform: scale(1.05); pointer-events: none; }
+.opening:not(.is-open) .bell-swing { animation: none; }
+g.bell-swing { transform-box: fill-box; transform-origin: 50% 0%; }
+
+/* Main progress bar */
+#scroll-progress { transform: scaleX(0); transform-origin: left; }
+
+/* Countdown flip */
+.flip-in { animation: flipIn 0.45s ease; }
+@keyframes flipIn { from { transform: translateY(-100%); opacity: 0; } to { transform: none; opacity: 1; } }
+
+/* Accordion */
+.acc { display: grid; grid-template-rows: 0fr; opacity: 0; transition: grid-template-rows 0.5s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease; }
+.acc > div { overflow: hidden; }
+.event-card.is-open .acc { grid-template-rows: 1fr; opacity: 1; }
+.chev { transition: transform 0.4s ease; }
+.event-card.is-open .chev { transform: rotate(180deg); }
+
+/* QR */
+.qr-box svg { display: block; width: 100%; height: 100%; }
+
+/* Toast */
+#toast {
+  position: fixed; left: 50%; top: 24px; z-index: 90; transform: translate(-50%, -20px); opacity: 0; pointer-events: none;
+  display: flex; flex-direction: column; gap: 2px; min-width: 240px; max-width: 90vw; padding: 12px 16px; border-radius: 12px;
+  background: #0F2D1E; color: #F3E5AB; border: 1px solid rgba(212,175,55,0.5);
+  font-family: 'Plus Jakarta Sans', 'Noto Sans Kannada', sans-serif; font-size: 14px; box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+#toast span { opacity: 0.8; font-size: 13px; }
+#toast.is-show { opacity: 1; transform: translate(-50%, 0); }
+
+@media (prefers-reduced-motion: reduce) {
+  .fx-up, .fx-pop, .reveal { opacity: 1 !important; transform: none !important; }
+}
